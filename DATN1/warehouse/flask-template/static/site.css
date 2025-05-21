@@ -1,0 +1,257 @@
+.bgt {
+    background: url('images/background.jpg') no-repeat fixed center;
+}
+
+body {
+    background: url('images/background.jpg') no-repeat center center fixed; 
+    background-size: cover;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #1f2937;
+}
+
+.navbar a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.navbar-brand {
+    font-size: 1.2em;
+    font-weight: 600;
+}
+
+.navbar-item {
+    font-variant: small-caps;
+    margin-left: 30px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 1.5rem;
+    background-color: rgba(255, 255, 255, 0.9); 
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.header h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #1f2937; 
+}
+
+.logout-btn {
+    transition: background-color 0.3s ease;
+}
+
+.logout-btn:hover {
+    background-color: #b91c1c;
+}
+
+.sensor-section {
+    background-color: #ffffff;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1.5rem;
+}
+
+.sensor-section h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 1rem;
+}
+
+.sensor-section p {
+    font-size: 1rem;
+    color: #4b5563;
+}
+
+.qr-section {
+    background-color: #ffffff;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1.5rem;
+}
+
+.qr-section h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 1rem;
+}
+
+.qr-section button {
+    transition: background-color 0.3s ease;
+}
+
+.qr-section #import-btn:hover {
+    background-color: #1d4ed8;
+}
+
+.qr-section #export-btn:hover {
+    background-color: #15803d;
+}
+
+.qr-section #cancel-btn:hover {
+    background-color: #4b5563;
+}
+
+.qr-section #confirm-btn:hover {
+    background-color: #1d4ed8;
+}
+
+.qr-section input {
+    border: 1px solid #d1d5db;
+    padding: 0.5rem;
+    width: 100%;
+    border-radius: 0.25rem;
+    margin-bottom: 0.5rem;
+}
+
+.qr-section #qr-error {
+    font-size: 0.875rem;
+    color: #dc2626;
+}
+
+.inventory-section {
+    background-color: #ffffff;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.inventory-section h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 1rem;
+}
+
+.inventory-section table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.inventory-section th,
+.inventory-section td {
+    border: 1px solid #e5e7eb;
+    padding: 0.75rem;
+    text-align: left;
+}
+
+.inventory-section th {
+    background-color: #e5e7eb;
+    font-weight: 600;
+    color: #1f2937;
+}
+
+.inventory-section tr:nth-child(even) {
+    background-color: #f9fafb;
+}
+
+.inventory-section tr:hover {
+    background-color: #f3f4f6;
+}
+
+@media (max-width: 640px) {
+    .header h1 {
+        font-size: 1.5rem;
+    }
+
+    .sensor-section h2,
+    .qr-section h2,
+    .inventory-section h2 {
+        font-size: 1.125rem;
+    }
+
+    .inventory-section table {
+        font-size: 0.875rem;
+    }
+}
+
+.error-container {
+    text-align: center;
+    margin: 100px auto;
+    padding: 20px;
+    max-width: 600px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.error-container h1 {
+    font-size: 100px;
+    color: #5387d5;
+    margin-bottom: 20px;
+}
+
+.error-container p {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 30px;
+}
+
+.error-container .button_1 {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #3a7ad4;
+    color: #6291ef;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.error-container .button_1:hover {
+    opacity: 0.8;
+}
+
+
+.sensor-history-section {
+    background-color: #ffffff;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1.5rem;
+}
+
+.sensor-history-section h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 1rem;
+}
+
+.sensor-history-section table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.sensor-history-section th,
+.sensor-history-section td {
+    border: 1px solid #e5e7eb;
+    padding: 0.75rem;
+    text-align: left;
+}
+
+.sensor-history-section th {
+    background-color: #e5e7eb;
+    font-weight: 600;
+    color: #1f2937;
+}
+
+.sensor-history-section tr:nth-child(even) {
+    background-color: #f9fafb;
+}
+
+.sensor-history-section tr:hover {
+    background-color: #f3f4f6;
+}

@@ -1,0 +1,84 @@
+.bgt {
+    background: url('images/background.jpg') no-repeat fixed center;
+}
+
+.whole {
+    width: 25%;
+    min-width: 400px;
+    background-color: #E2E4E1;
+    margin: 150px auto 0;
+    opacity: 0.9;
+    text-align: center;
+    padding: 20px 15px 35px;
+    /* Thêm padding để tạo khoảng cách */
+    border-radius: 15px;
+    /* Bo góc */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    /* Đổ bóng */
+}
+
+.zhuce {
+    width: 100%;
+    background-color: #4ab5a1;
+    height: 50px;
+    line-height: 50px;
+    font-weight: bold;
+    color: #fff;
+    border-radius: 5px;
+    /* Bo góc cho nút đăng ký */
+}
+
+.input {
+    width: 100%;
+    color: #4ab5a1;
+    margin-top: 20px;
+}
+
+.input_top {
+    margin-bottom: 10px;
+    font-size: 13pt;
+    font-weight: bold;
+}
+
+.input_value {
+    margin: 0 10%;
+    width: 80%;
+    text-indent: 10px;
+    height: 28px;
+    border: 1px solid #4ab5a1;
+    line-height: 20px;
+    border-radius: 5px;
+    /* Bo góc cho input */
+}
+
+.input_value:hover {
+    border: 1px solid;
+    border-color: #4ab5a1;
+}
+
+.button_div {
+    margin: 0 10%;
+    width: 80%;
+    margin-top: 50px;
+}
+
+.button_1 {
+    color: #fff;
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+    background-color: #4ab5a1;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    border-radius: 5px;
+    /* Bo góc cho nút */
+}
+
+.button_1:hover {
+    opacity: 0.7;
+}
+
+.block_30 {
+    height: 20px;
+}

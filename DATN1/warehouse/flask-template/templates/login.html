@@ -1,0 +1,26 @@
+{% extends "base_1.html" %}
+
+{% block title %}Login{% endblock title %}
+
+{% block header %}Login{% endblock header %}
+
+{% block content %}
+<div class="form-container">
+  <form class="" action="{{ url_for('login') }}" id="newone" name="newone" method="POST">
+    <div class="input">
+      <div class="input_top">User ID</div>
+      <input class="input_value" value="" name="id" />
+    </div>
+    <div class="block_30"></div>
+    <div class="input">
+      <div class="input_top">Password</div>
+      <input type="password" class="input_value" value="" name="pw" />
+    </div>
+
+    <div class="button_div">
+      <input class="button_1" type="submit" value="Login" />
+    </div>
+  </form>
+  <p>Don't have an account? <a href="{{ url_for('register') }}">Register here</a></p>
+</div>
+{% endblock content %}

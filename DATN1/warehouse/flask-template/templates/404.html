@@ -1,0 +1,13 @@
+{% extends "base_1.html" %}
+
+{% block title %}404 Not Found{% endblock title %}
+
+{% block header %}Page Not Found{% endblock header %}
+
+{% block content %}
+<div class="error-container">
+    <h1>404</h1>
+    <p>Oops! The page you are looking for does not exist or you do not have permission to access it.</p>
+    <a href="{{ url_for('index') }}" class="button_1">Go Back to Home</a>
+</div>
+{% endblock content %}

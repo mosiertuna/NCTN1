@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warehouse Management</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='site.css') }}">
+</head>
+
+<body class="bg-gray-100">
+    <div class="container mx-auto p-4">
+        <div class="header flex justify-between items-center mb-4">
+            <h1 class="text-2xl font-bold">Warehouse Management</h1>
+            <a href="{{ url_for('logout') }}" class="bg-red-500 text-white p-2 rounded">Log out</a>
+        </div>
+
+        <!-- Sensor Data -->
+        <div class="sensor-section mb-4">
+            <h2 class="text-xl font-semibold">Sensor Data (Real-time)</h2>
+            <p id="sensor-temperature">Temperature: -- °C</p>
+            <p id="sensor-humidity">Humidity: -- %</p>
+            <p id="sensor-timestamp">Time: --</p>
+        </div>
+
+        <!-- QR Code Scanner -->
+        <div class="qr-section mb-4">
+            <h2 class="text-xl font-semibold">QR Code Scanner</h2>
+            <div id="no-product" class="text-gray-500">No product</div>
+            <div id="product-data" class="hidden">
+                <p>QR Code: <span id="qr_code">--</span></p>
+                <input id="item-name" type="text" placeholder="Item name" class="p-2 border rounded w-full mb-2">
+                <p>Weight: <span id="weight">--</span> kg</p>
+                <p>Timestamp: <span id="timestamp">--</span></p>
+                <div class="mt-2">
+                    <button id="import-btn" onclick="importItem()"
+                        class="bg-blue-500 text-white p-2 rounded mr-2">Import</button>
+                    <button id="export-btn" onclick="exportItem()"
+                        class="bg-green-500 text-white p-2 rounded">Export</button>
+                </div>
+            </div>
+            <div id="qr-error" class="hidden text-red-500"></div>
+        </div>
+
+        <!-- Sensor Data History -->
+        <div class="sensor-history-section mb-4">
+            <h2 class="text-xl font-semibold">Sensor Data History (Hourly)</h2>
+            <table class="w-full border-collapse">
+                <thead>
+                    <tr class="bg-gray-200">
+                        <th class="border p-2">Temperature (°C)</th>
+                        <th class="border p-2">Humidity (%)</th>
+                        <th class="border p-2">Timestamp</th>
+                    </tr>
+                </thead>
+                <tbody id="sensor-history-table">
+                    {% for data in sensor_data %}
+                    <tr>
+                        <td class="border p-2">{{ data.temperature | round(1) }}</td>
+                        <td class="border p-2">{{ data.humidity | round(1) }}</td>
+                        <td class="border p-2">{{ data.timestamp }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Inventory Table -->
+        <div class="inventory-section">
+            <h2 class="text-xl font-semibold">Inventory List</h2>
+            <table class="w-full border-collapse">
+                <thead>
+                    <tr class="bg-gray-200">
+                        <th class="border p-2">QR Code</th>
+                        <th class="border p-2">Name</th>
+                        <th class="border p-2">Weight</th>
+                        <th class="border p-2">Quantity</th>
+                        <th class="border p-2">Timestamp</th>
+                    </tr>
+                </thead>
+                <tbody id="inventory-table"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        let currentQrCode = null;
+        let currentName = '';
+        let currentWeight = null;
+        let currentTimestamp = null;
+
+        function showError(message) {
+            document.getElementById('qr-error').textContent = message;
+            document.getElementById('qr-error').classList.remove('hidden');
+        }
+
+        function hideError() {
+            document.getElementById('qr-error').textContent = '';
+            document.getElementById('qr-error').classList.add('hidden');
+        }
+
+        // Fetch and display sensor data (real-time)
+        async function fetchSensorData() {
+            try {
+                const response = await fetch('/api/sensor_data');
+                const data = await response.json();
+
+                if (data.status === 'error') {
+                    document.getElementById('sensor-temperature').textContent = 'Temperature: -- °C';
+                    document.getElementById('sensor-humidity').textContent = 'Humidity: -- %';
+                    document.getElementById('sensor-timestamp').textContent = 'Time: --';
+                    return;
+                }
+
+                // Cập nhật dữ liệu real-time
+                document.getElementById('sensor-temperature').textContent = `Temperature: ${data.temperature.toFixed(1)} °C`;
+                document.getElementById('sensor-humidity').textContent = `Humidity: ${data.humidity.toFixed(1)} %`;
+                document.getElementById('sensor-timestamp').textContent = `Time: ${data.timestamp}`;
+            } catch (error) {
+                console.error('Error fetching sensor data:', error);
+                document.getElementById('sensor-temperature').textContent = 'Temperature: -- °C';
+                document.getElementById('sensor-humidity').textContent = 'Humidity: -- %';
+                document.getElementById('sensor-timestamp').textContent = 'Time: --';
+            }
+        }
+
+        // Fetch and update sensor history (hourly)
+        async function fetchSensorHistory() {
+            try {
+                const response = await fetch('/api/sensor_data_history');
+                const dataArray = await response.json();
+                const tableBody = document.getElementById('sensor-history-table');
+                tableBody.innerHTML = '';
+
+                if (Array.isArray(dataArray) && dataArray.length > 0) {
+                    dataArray.forEach(data => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td class="border p-2">${data.temperature.toFixed(1)}</td>
+                            <td class="border p-2">${data.humidity.toFixed(1)}</td>
+                            <td class="border p-2">${data.timestamp}</td>
+                        `;
+                        tableBody.appendChild(row);
+                    });
+                }
+            } catch (error) {
+                console.error('Error fetching sensor history:', error);
+            }
+        }
+
+
+
+        // Thêm Socket.IO client
+        const socket = io('http://localhost:5000');
+
+        // Fetch and display latest QR and weight data
+        async function fetchLatestData() {
+            try {
+                const response = await fetch('/api/latest_data');
+                const data = await response.json();
+                const noProductDiv = document.getElementById('no-product');
+                const productDataDiv = document.getElementById('product-data');
+
+                if (data.status === 'error' || !data.qr_code) {
+                    noProductDiv.classList.remove('hidden');
+                    productDataDiv.classList.add('hidden');
+                    currentQrCode = null;
+                    currentName = '';
+                    currentWeight = null;
+                    currentTimestamp = null;
+                    return;
+                }
+
+                noProductDiv.classList.add('hidden');
+                productDataDiv.classList.remove('hidden');
+                document.getElementById('qr_code').textContent = data.qr_code || '--';
+                document.getElementById('item-name').value = data.name || '';
+                document.getElementById('weight').textContent = data.weight ? data.weight.toFixed(2) : '--';
+                document.getElementById('timestamp').textContent = data.qr_timestamp || data.sensor_timestamp || '--';
+                currentQrCode = data.qr_code;
+                currentName = data.name || '';
+                currentWeight = data.weight;
+                currentTimestamp = data.qr_timestamp || data.sensor_timestamp;
+            } catch (error) {
+                console.error('Error fetching latest data:', error);
+            }
+        }
+
+        // Lắng nghe sự kiện từ server
+        socket.on('new_qr_data', (data) => {
+            console.log('New QR data received:', data);
+            fetchLatestData(); // Cập nhật giao diện khi có dữ liệu mới
+        });
+
+        // Gọi lần đầu khi tải trang
+        fetchLatestData();
+
+        // Fetch and display inventory data
+        async function fetchInventory() {
+            try {
+                const response = await fetch('/api/inventory');
+                const inventory = await response.json();
+                const tableBody = document.getElementById('inventory-table');
+                tableBody.innerHTML = '';
+                inventory.forEach(item => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td class="border p-2">${item.qr_code}</td>
+                        <td class="border p-2">${item.name}</td>
+                        <td class="border p-2">${item.weight.toFixed(2)} kg</td>
+                        <td class="border p-2">${item.quantity}</td>
+                        <td class="border p-2">${item.timestamp}</td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+            } catch (error) {
+                console.error('Error fetching inventory:', error);
+            }
+        }
+
+        async function importItem() {
+            const name = document.getElementById('item-name').value.trim();
+
+            if (!currentQrCode || !name) {
+                  showError('Please provide QR code and item name');
+                return;
+            }
+
+            // Nếu currentWeight có giá trị thì lấy, nếu không thì gán mặc định = 0
+            const weightToSend = (typeof currentWeight === 'number' && !isNaN(currentWeight)) ? currentWeight : 0;
+
+            try {
+                const response = await fetch('/api/import_item', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        qr_code: currentQrCode,
+                        name: name,
+                        weight: weightToSend
+                    })
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    alert(result.message);
+                    fetchInventory();
+                    document.getElementById('item-name').value = '';
+                } else {
+                    showError(result.message);
+                }
+            } catch (error) {
+                showError('Error: ' + error);
+            }
+        }
+
+
+        // Export item
+        async function exportItem() {
+            const name = document.getElementById('item-name').value.trim();
+            if (!currentQrCode || !name) {
+                showError('Please provide QR code and item name');
+                return;
+            }
+            try {
+                const response = await fetch('/api/export_item', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ qr_code: currentQrCode, name: name })
+                });
+                const result = await response.json();
+                if (response.ok) {
+                    alert(result.message);
+                    fetchInventory();
+                    document.getElementById('item-name').value = '';
+                } else {
+                    showError(result.message);
+                }
+            } catch (error) {
+                showError('Error: ' + error);
+            }
+        }
+
+        // Update data periodically
+        setInterval(fetchSensorData, 1000);
+        setInterval(fetchSensorHistory, 5000);
+        setInterval(fetchLatestData, 1000);
+        setInterval(fetchInventory, 5000);
+        fetchSensorData();
+        fetchSensorHistory();
+        fetchLatestData();
+        fetchInventory();
+    </script>
+</body>
+
+</html>

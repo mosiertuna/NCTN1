@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="{% block description %}Page description{% endblock description %}">
+  <meta name="author" content="cynic">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='login.css') }}">
+
+  <title>{% block title %}Ware_House{% endblock title %}</title>
+  <style type="text/css">
+    .alert {
+      position: relative;
+      padding: 7px;
+      margin: 7px 0;
+      border: 1px solid transparent;
+      color: #09d8a1;
+      background-color: #a5ee9b;
+      border-color: #b8ffdd;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+
+<body class="bgt">
+  <div class="whole">
+    {% for message in get_flashed_messages() %}
+    <div class="alert">{{ message }}</div>
+    {% endfor %}
+    <div class="zhuce">
+      {% block header %}Header{% endblock header %}
+    </div>
+
+    <div class="content">
+      {% block content %}{% endblock content %}
+    </div>
+  </div>
+</body>
+
+</html>

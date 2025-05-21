@@ -1,0 +1,35 @@
+{% extends "base_1.html" %}
+
+{% block title %}Register{% endblock title %}
+
+{% block header %}Register{% endblock header %}
+
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='register.css') }}">
+<form method="POST" action="{{ url_for('register') }}">
+  <div class="input">
+    <div class="input_top">User ID</div>
+    <input class="input_value" value="" name="id" />
+  </div>
+  <div class="block_30"></div>
+  <div class="input">
+    <div class="input_top">Password</div>
+    <input type="password" class="input_value" value="" name="pw" />
+  </div>
+  <div class="block_30"></div>
+  <div class="input">
+    <div class="input_top">Phone Number</div>
+    <input class="input_value" value="" name="tel" />
+  </div>
+  <div class="block_30"></div>
+  <div class="input">
+    <div class="input_top">Job Number</div>
+    <input class="input_value" value="" name="job_num" />
+  </div>
+
+  <div class="button_div">
+    <input class="button_1" type="submit" value="Register" />
+  </div>
+</form>
+<p>Already have an account? <a href="{{ url_for('login') }}">Log in</a></p>
+{% endblock content %}
