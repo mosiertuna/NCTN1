@@ -3,7 +3,7 @@
 }
 
 body {
-    background: url('images/background.jpg') no-repeat center center fixed; 
+    background: url('images/background.jpg') no-repeat center center fixed;
     background-size: cover;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: #1f2937;
@@ -28,9 +28,9 @@ body {
     max-width: 1200px;
     margin: 30px auto;
     padding: 1.5rem;
-    background-color: rgba(255, 255, 255, 0.9); 
+    background-color: rgba(255, 255, 255, 0.9);
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .header {
@@ -43,7 +43,7 @@ body {
 .header h1 {
     font-size: 2rem;
     font-weight: bold;
-    color: #1f2937; 
+    color: #1f2937;
 }
 
 .logout-btn {
@@ -254,4 +254,48 @@ body {
 
 .sensor-history-section tr:hover {
     background-color: #f3f4f6;
+}
+
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+}
+
+.navbar-custom {
+    background-color: #007bff;
+    /* Bootstrap primary blue */
+}
+
+.navbar-custom .navbar-brand,
+.navbar-custom .nav-link,
+.navbar-custom .navbar-text {
+    color: white;
+}
+
+.navbar-custom .nav-link:hover {
+    color: #e0e0e0;
+}
+
+.icon-link {
+    font-size: 1.2em;
+    /* Icon size */
+    margin-left: 15px;
+    /* Spacing between icons */
+}
+
+.card {
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.card-header {
+    background-color: #f0f0f0;
+    font-weight: bold;
+}
+
+.table-responsive {
+    max-height: 400px;
+    /* Limit height for scrollable tables */
+    overflow-y: auto;
 }

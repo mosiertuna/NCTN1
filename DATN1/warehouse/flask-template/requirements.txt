@@ -1,5 +1,8 @@
 flask
-pillow
+Pillow
 opencv-python
 flask-socketio 
 eventlet
+flask-sqlalchemy 
+flask-wtf
+werkzeug

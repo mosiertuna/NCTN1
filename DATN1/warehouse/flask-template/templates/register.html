@@ -6,7 +6,7 @@
 
 {% block content %}
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='register.css') }}">
-<form method="POST" action="{{ url_for('register') }}">
+<form method="POST" action="{{ url_for('auth.register') }}">
   <div class="input">
     <div class="input_top">User ID</div>
     <input class="input_value" value="" name="id" />
@@ -31,5 +31,5 @@
     <input class="button_1" type="submit" value="Register" />
   </div>
 </form>
-<p>Already have an account? <a href="{{ url_for('login') }}">Log in</a></p>
+<p>Already have an account? <a href="{{ url_for('auth.login') }}">Log in</a></p>
 {% endblock content %}
