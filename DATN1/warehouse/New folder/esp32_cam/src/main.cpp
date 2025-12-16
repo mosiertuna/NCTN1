@@ -5,7 +5,7 @@
 
 
 #define LED_PIN 4                      // Đèn flash trên AI Thinker ESP32-CAM
-#define SEND_INTERVAL_MS 2000          // Gửi ảnh mỗi 2 giây (tăng tần suất)
+#define SEND_INTERVAL_MS 100          // Gửi ảnh mỗi 2 giây (tăng tần suất)
 #define WIFI_RECONNECT_INTERVAL_MS 5000 // Kiểm tra WiFi mỗi 5 giây
 #define CAMERA_REINIT_INTERVAL_MS 60000 // Kiểm tra/khởi tạo lại camera mỗi 60 giây (ít thường xuyên hơn để ổn định)
 #define CAMERA_INIT_RETRIES 5          // Thử khởi tạo camera tối đa 5 lần (tăng số lần thử)
@@ -61,13 +61,13 @@ bool setupCamera() {
   Serial.printf("PSRAM found: %s\n", psram ? "Yes" : "No");
 
   if (psram) {
-    config.frame_size = FRAMESIZE_UXGA; // Kích thước ảnh cao nhất (1600x1200)
-    config.jpeg_quality = 8;            // Chất lượng JPEG (0-63), 8 là tốt và kích thước vừa phải
+    config.frame_size = FRAMESIZE_QVGA; // Kích thước ảnh cao nhất (1600x1200)
+    config.jpeg_quality = 15;            // Chất lượng JPEG (0-63), 8 là tốt và kích thước vừa phải
     config.fb_count = 2;                // 2 frame buffer để chụp ảnh mượt mà hơn
   } else {
     // Nếu không có PSRAM, dùng kích thước nhỏ hơn để tránh tràn bộ nhớ
-    config.frame_size = FRAMESIZE_XGA;  // 1024x768
-    config.jpeg_quality = 10;           // Chất lượng giảm nhẹ
+    config.frame_size = FRAMESIZE_QVGA;  // 1024x768
+    config.jpeg_quality = 20;           // Chất lượng giảm nhẹ
     config.fb_count = 1;
   }
 

@@ -8,8 +8,14 @@ from PIL import Image
 from app import socketio 
 from werkzeug.exceptions import BadRequest, RequestEntityTooLarge
 import sqlite3 
+import os
+from werkzeug.utils import secure_filename
+
 
 qr_bp = Blueprint('qr', __name__)
+UPLOAD_FOLDER = 'uploads'
+if not os.path.exists(UPLOAD_FOLDER):
+    os.makedirs(UPLOAD_FOLDER)
 
 logger = logging.getLogger(__name__)
 
@@ -30,6 +36,10 @@ def upload_image():
             return jsonify({'status': 'error', 'message': 'No image selected'}), 400
 
         image_file.seek(0)
+        
+        
+
+
 
         try:
             logger.debug("Processing uploaded image for QR code detection using OpenCV")

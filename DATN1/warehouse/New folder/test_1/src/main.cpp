@@ -44,7 +44,6 @@ void sendSensorData() {
   }
 
   http.addHeader("Content-Type", "application/json");
-  http.setTimeout(2000);
 
   DynamicJsonDocument doc(300);
   doc["temperature"] = temperature;
@@ -81,7 +80,7 @@ void handleData() {
   String json = "{";
   json += "\"temperature\":" + String(temperature, 1) + ",";
   json += "\"humidity\":" + String(humidity, 0) + ",";
-  json += "\"weight\":" + String(weight / 1000, 2);
+  json += "\"weight\":" + String(weight / 10000 + 6000 - 400, 2);
   json += "}";
   Serial.println("Sending debug data to client.");
   server.send(200, "application/json", json);

@@ -28,9 +28,9 @@ body {
     max-width: 1200px;
     margin: 30px auto;
     padding: 1.5rem;
-    background-color: rgba(255, 255, 255, 0.9);
+    background-color: rgba(126, 204, 159, 0.9);
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(239, 244, 239, 0.1);
+    box-shadow: 0 4px 8px rgba(169, 218, 169, 0.1);
 }
 
 .header {
@@ -54,24 +54,97 @@ body {
     background-color: #b91c1c;
 }
 
+/* Sensor Section */
 .sensor-section {
-    background-color: #ffffff;
-    padding: 1.5rem;
-    border-radius: 0.5rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    margin-bottom: 1.5rem;
+    background-color: #fdfdfd; /* Xanh lá nhạt, đồng bộ với site.css */
+    padding: 2rem; /* Tăng padding cho thoáng */
+    border-radius: 0.75rem; /* Bo góc mềm mại hơn */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Bóng nhẹ */
+    margin-bottom: 2rem; /* Khoảng cách dưới */
 }
 
+/* Tiêu đề */
 .sensor-section h2 {
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: #1f2937;
-    margin-bottom: 1rem;
+    font-size: 1.5rem; /* Tăng kích thước tiêu đề */
+    font-weight: 700; /* Đậm hơn */
+    color: #000000; /* Chữ đen */
+    margin-bottom: 1.5rem; /* Khoảng cách dưới tiêu đề */
 }
 
+/* Grid layout */
+.sensor-section .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Hai cột đều nhau */
+    gap: 2rem; /* Khoảng cách giữa các cột */
+    align-items: center; /* Căn giữa theo chiều dọc */
+}
+
+/* Dữ liệu sensor */
 .sensor-section p {
-    font-size: 1rem;
-    color: #4b5563;
+    font-size: 1.25rem; /* Tăng kích thước chữ */
+    font-weight: 600; /* Đậm */
+    color: #000000; /* Chữ đen */
+    margin-bottom: 1rem; /* Khoảng cách giữa các dòng */
+    display: flex;
+    justify-content: space-between; /* Căn đều nội dung */
+    padding: 0.5rem 1rem; /* Padding cho dễ nhìn */
+    background-color: rgba(213, 205, 205, 0.2); /* Nền trắng trong suốt nhẹ */
+    border-radius: 0.25rem; /* Bo góc nhẹ */
+}
+
+/* Giá trị sensor (nhiệt độ, độ ẩm) */
+.sensor-section p span:not(.digital-clock) {
+    font-size: 1.5rem; /* Giá trị to hơn */
+    font-weight: 700; /* Đậm hơn */
+    color: #000000; /* Chữ đen */
+}
+
+/* Đồng hồ điện tử */
+.digital-clock {
+    font-family: 'Digital Numbers', monospace;
+    font-size: 2rem; /* Tăng kích thước chữ */
+    background-color: #a8c9ae; /* Nền trắng */
+    color: #ede6e6; /* Chữ đen */
+    padding: 0.75rem 1.5rem; /* Padding rộng hơn */
+    border-radius: 0.5rem; /* Bo góc */
+    display: inline-block;
+    box-shadow: 0 4px 8px rgba(209, 200, 200, 0.1); /* Bóng nhẹ */
+    border: 2px solid #c5dece; /* Viền xanh lá đậm */
+    text-align: center; /* Căn giữa */
+}
+
+/* Biểu đồ */
+.chart-container {
+    max-width: 100%; /* Đảm bảo biểu đồ không vượt khung */
+    background-color: #ffffff; /* Nền trắng */
+    padding: 1.5rem; /* Padding rộng hơn */
+    border-radius: 0.5rem; /* Bo góc */
+    box-shadow: 0 4px 8px rgba(222, 219, 219, 0.1); /* Bóng nhẹ */
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .sensor-section .grid {
+        grid-template-columns: 1fr; /* Một cột trên màn nhỏ */
+        gap: 1.5rem;
+    }
+
+    .sensor-section h2 {
+        font-size: 1.25rem;
+    }
+
+    .sensor-section p {
+        font-size: 1.125rem;
+    }
+
+    .sensor-section p span:not(.digital-clock) {
+        font-size: 1.25rem;
+    }
+
+    .digital-clock {
+        font-size: 1.75rem;
+        padding: 0.5rem 1rem;
+    }
 }
 
 .qr-section {
